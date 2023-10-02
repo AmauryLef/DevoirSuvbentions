@@ -17,6 +17,10 @@ public class SubventionsController implements Initializable
 {
     HashMap<String,HashMap<String, TreeMap<Integer,ArrayList<Structure>>>> lesSubventions;
     //Hashmap<NomVille, Hashmap<nomsecteur, TreeMap<Année, Structure>>>
+
+    TreeItem racine1;
+    TreeItem racine2;
+
     @FXML
     private AnchorPane apAffecter;
     @FXML
@@ -58,7 +62,7 @@ public class SubventionsController implements Initializable
 
 
         // Jeu d'essais au cas où :)
-
+/*
       Structure structure1 = new Structure("Structure 1",1000);
         Structure structure2 = new Structure("Structure 2",2000);
        Structure structure3 = new Structure("Structure 3",3000);
@@ -114,7 +118,7 @@ public class SubventionsController implements Initializable
         lesSubventions.put("Bordeaux",lesSecteursDeBordeaux);
         lesSubventions.put("Nantes",lesSecteursDeNantes);
         lesSubventions.put("Paris",lesSecteursDeParis);
-
+*/
     }
 
     @FXML
@@ -171,8 +175,8 @@ public class SubventionsController implements Initializable
 
                 HashMap<String, ArrayList<Structure>> lesSecteurs = new HashMap<>();
 
-                lesSecteurs.put(lvSecteurs.getSelectionModel().getSelectedItem().toString(), lesStructures); //Hashmap lesProjets <clé=le projet, l'arraylist des tâches
-
+                lesSecteurs.put(lvSecteurs.getSelectionModel().getSelectedItem().toString(), lesStructures);
+                lesSubventions.put(lvVilles.getSelectionModel().getSelectedItem().toString(), );
 
             }
             else
@@ -204,6 +208,48 @@ public class SubventionsController implements Initializable
     public void lvVillesStatsClicked(Event event)
     {
 
+        if (!lesSubventions.containsKey(lvVilles.getSelectionModel().getSelectedItem().toString().equals("")));
+        {
+            int a = 0;
+            int s = 0;
+            TreeItem noeudSecteur;
+            TreeItem noeudAnnee;
+            racine1.getChildren().clear();
+            racine2.getChildren().clear();
+
+            if (lesSubventions.containsKey(lvVilles.getSelectionModel().getSelectedItem().toString())) {
+
+
+                for (String nomSecteur : lesSubventions.keySet())
+                {
+                    noeudSecteur = new TreeItem<>(nomSecteur);
+                        for (Structure structure : lesSubventions.get())
+                        {
+                            noeudSecteur = new TreeItem(lesSubventions.get(lvSecteurs.getSelectionModel().getSelectedItem().toString()) + " : " + structure.getMontant());
+
+                        }
+                    racine1.getChildren().add(noeudSecteur);
+                }
+
+
+                for (String numAnnee : lesSubventions.keySet())
+                {
+                    noeudAnnee = new TreeItem<>(numAnnee);
+                    for (Structure structure : lesSubventions.get())
+                    {
+                        noeudAnnee = new TreeItem(lesSubventions.get(cboAnnees.getSelectionModel().getSelectedItem().toString()) + " : " + structure.getMontant());
+
+                    }
+                    racine2.getChildren().add(noeudAnnee);
+                }
+                tvMontantsParSecteurs.setRoot(racine1);
+                tvMontantsParAnnees.setRoot(racine2);
+
+
+
+
+            }
+        }
 
     }
 }
